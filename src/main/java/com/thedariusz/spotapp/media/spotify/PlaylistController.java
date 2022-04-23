@@ -1,23 +1,32 @@
 package com.thedariusz.spotapp.media.spotify;
 
-import com.thedariusz.spotapp.model.Playlist;
-import com.thedariusz.spotapp.model.UserPlaylist;
+import com.thedariusz.spotapp.model.UserInfo;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
+import org.springframework.web.reactive.function.client.WebClient;
 
 @RestController
 @RequestMapping("/spotify/playlist")
 public class PlaylistController {
+    private final WebClient webClient;
+
+    public PlaylistController(WebClient webClient) {
+        this.webClient = webClient;
+    }
 
     @RequestMapping("/{userId}")
-    public UserPlaylist getPlaylist(@PathVariable("userId") String userId) {
-        List<Playlist> playlists = List.of(
-                new Playlist("1", "my playlist 1", "some playlist 1"),
-                new Playlist("2", "my playlist 2", "some playlist 2")
-        );
-        return new UserPlaylist(userId, playlists);
+    public UserInfo getPlaylist(@PathVariable("userId") String userId) {
+        String uri = "https://api.spotify.com/v1/me";
+
+        return webClient
+                .method(HttpMethod.GET)
+                .uri(uri)
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .bodyToMono(UserInfo.class)
+                .block();
     }
 }
