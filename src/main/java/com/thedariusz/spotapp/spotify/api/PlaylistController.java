@@ -1,6 +1,6 @@
-package com.thedariusz.spotapp.media.spotify;
+package com.thedariusz.spotapp.spotify.api;
 
-import com.thedariusz.spotapp.model.Playlist;
+import com.thedariusz.spotapp.model.PlaylistsResponse;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +18,7 @@ public class PlaylistController {
     }
 
     @RequestMapping("/{userId}")
-    public Playlist getPlaylist(@PathVariable("userId") String userId) {
+    public PlaylistsResponse getPlaylist(@PathVariable("userId") String userId) {
         String uri = "https://api.spotify.com/v1/users/"+userId+"/playlists";
 
         return webClient
@@ -26,7 +26,7 @@ public class PlaylistController {
                 .uri(uri)
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
-                .bodyToMono(Playlist.class)
+                .bodyToMono(PlaylistsResponse.class)
                 .block();
     }
 }
