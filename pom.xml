@@ -8,14 +8,17 @@
         <version>2.6.7</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.thedariusz</groupId>
-    <artifactId>SpotApp</artifactId>
+    <groupId>com.thedariusz.spotapp</groupId>
+    <artifactId>spotify-client</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>SpotApp</name>
-    <description>SpotApp</description>
+    <name>spot-app</name>
+    <description>App to connect with Spotify account and make available your playlists and songs through the rest api</description>
+
     <properties>
         <java.version>17</java.version>
+        <oauth2-client.version>2.6.7</oauth2-client.version>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -36,6 +39,12 @@
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-client</artifactId>
+            <version>${oauth2-client.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
