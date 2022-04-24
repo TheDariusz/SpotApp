@@ -10,11 +10,4 @@ public record PlaylistsResponse(
         String previous,
         int total
 ) {
-    private record Playlist(
-            String description,
-            String href,
-            String id,
-            String name
-    ) {
-    }
 }
