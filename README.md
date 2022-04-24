@@ -9,11 +9,11 @@ JDK 17, Docker, Thymeleaf, Spring-Boot
 
 ### Running locally in IntelliJ
 1. Run java main function inside SpotApplication class
-3. Open: [HOME](http://localhost:8081/home)
+3. To get a specific user list of playlists: [/spotify/playlist/{spotify_user_id}](http://localhost:8081/spotify/playlist/userId)
 
 ### Running on server
 
-[//]: # ([https://ytapp-339922-crzmcsu6ea-ew.a.run.app/home]&#40;https://ytapp-339922-crzmcsu6ea-ew.a.run.app/home&#41;)
+in progress
 
 [//]: # (1. Run `./run-in-docker`)
 
@@ -29,4 +29,4 @@ Google Cloud Run on Google Cloud Platform
 Deployment through CD process with GitHub Actions  
 
 # Technical debt / TODO
-- [ ] Spotify API handling
+- [ ] to do list
