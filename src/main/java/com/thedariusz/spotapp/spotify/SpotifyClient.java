@@ -2,6 +2,7 @@ package com.thedariusz.spotapp.spotify;
 
 import com.thedariusz.spotapp.model.Playlist;
 import com.thedariusz.spotapp.model.PlaylistsResponse;
+import com.thedariusz.spotapp.model.RecentlyPlayedResponse;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -31,4 +32,15 @@ public class SpotifyClient {
     }
 
 
+    public RecentlyPlayedResponse fetchRecentTracks() {
+        String uri = "https://api.spotify.com/v1/me/player/recently-played";
+
+        return webClient
+                .method(HttpMethod.GET)
+                .uri(uri)
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .bodyToMono(RecentlyPlayedResponse.class)
+                .block();
+    }
 }
