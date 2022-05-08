@@ -12,7 +12,7 @@ public record Album(
 
         String href,
         String id,
-        List<CoverImage> images,
+        List<ImageResponse> images,
         String name,
 
         @JsonProperty("release_date")
@@ -25,10 +25,4 @@ public record Album(
         String uri
 
 ) {
-    private record CoverImage(
-            int height,
-            int weight,
-            String url
-    ) {
-    }
 }

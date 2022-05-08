@@ -2,7 +2,7 @@ package com.thedariusz.spotapp.model;
 
 import java.util.List;
 
-public record SearchResponse(
+public record SearchTrackResponse(
         Tracks tracks
 ) {
     private record Tracks(

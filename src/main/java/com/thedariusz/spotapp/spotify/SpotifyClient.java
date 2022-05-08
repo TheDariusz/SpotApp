@@ -1,15 +1,13 @@
 package com.thedariusz.spotapp.spotify;
 
-import com.thedariusz.spotapp.model.Playlist;
-import com.thedariusz.spotapp.model.PlaylistsResponse;
-import com.thedariusz.spotapp.model.RecentlyPlayedResponse;
-import com.thedariusz.spotapp.model.SearchResponse;
+import com.thedariusz.spotapp.model.*;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 public class SpotifyClient {
 
@@ -20,7 +18,7 @@ public class SpotifyClient {
     }
 
     public List<Playlist> fetchPlaylists(String userId) {
-        String uri = "https://api.spotify.com/v1/users/"+userId+"/playlists";
+        String uri = "https://api.spotify.com/v1/users/" + userId + "/playlists";
 
         PlaylistsResponse response = webClient
                 .method(HttpMethod.GET)
@@ -45,16 +43,29 @@ public class SpotifyClient {
                 .block();
     }
 
-    public SearchResponse searchTrack(String trackTitle, String artistName) {
-        String uri = "https://api.spotify.com/v1/search?type=track&q=artist:"
-                +artistName+"+track:"
-                +trackTitle;
+    public SearchTrackResponse searchArtistAndTrack(String trackTitle, Optional<String> artistName) {
+        String uri = "https://api.spotify.com/v1/search?type=track&q=track:" + trackTitle;
+        if (artistName.isPresent()) {
+            uri = uri + "+artist:" + artistName.get();
+        }
+
         return webClient
                 .method(HttpMethod.GET)
                 .uri(uri)
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
-                .bodyToMono(SearchResponse.class)
+                .bodyToMono(SearchTrackResponse.class)
+                .block();
+    }
+
+    public SearchArtistResponse searchArtist(String artistName) {
+        String uri = "https://api.spotify.com/v1/search?type=artist&q=artist:" + artistName;
+        return webClient
+                .method(HttpMethod.GET)
+                .uri(uri)
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .bodyToMono(SearchArtistResponse.class)
                 .block();
     }
 }
