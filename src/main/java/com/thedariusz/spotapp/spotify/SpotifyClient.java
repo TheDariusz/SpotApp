@@ -3,6 +3,7 @@ package com.thedariusz.spotapp.spotify;
 import com.thedariusz.spotapp.model.Playlist;
 import com.thedariusz.spotapp.model.PlaylistsResponse;
 import com.thedariusz.spotapp.model.RecentlyPlayedResponse;
+import com.thedariusz.spotapp.model.SearchResponse;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -41,6 +42,19 @@ public class SpotifyClient {
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
                 .bodyToMono(RecentlyPlayedResponse.class)
+                .block();
+    }
+
+    public SearchResponse searchTrack(String trackTitle, String artistName) {
+        String uri = "https://api.spotify.com/v1/search?type=track&q=artist:"
+                +artistName+"+track:"
+                +trackTitle;
+        return webClient
+                .method(HttpMethod.GET)
+                .uri(uri)
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .bodyToMono(SearchResponse.class)
                 .block();
     }
 }
